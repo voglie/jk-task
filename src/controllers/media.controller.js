@@ -26,9 +26,8 @@ const addMedia = async (req, res) => {
 const getMediaById = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id)
     const mediaData = await media.findOne({_id: id});
-    console.log(mediaData)
+    
     if(!mediaData) {
       return errorResponse(req, res, 'media with id not found', 404, { err: error });
     } 
@@ -75,6 +74,8 @@ const deleteMedia = async (req, res) => {
 const updateMedia = async (req, res) => {
   try {
     const { id } = req.params;
+    const bucketName = req.body.bucketName;
+
     const images = bucketName+"/"+req.file.filename;
     const mediaData = await media.findByIdAndUpdate(id, {images: images});
 
